@@ -1,0 +1,67 @@
+{% extends "events/base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- HERO BANNER -->
+<div class="hero-banner">
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+        <h1>Outreach Events & Activities</h1>
+        <p>
+            National & International platforms for outreach, awareness,
+            scientific engagement and public participation.
+        </p>
+    </div>
+</div>
+
+<!-- PAGE HEADER 
+<div class="events-header">
+    <h1>Outreach Activities & Events</h1>
+    <p class="events-intro">
+        Explore our outreach initiatives, awareness programs, scientific engagements,
+        and public events conducted by NCPOR.
+    </p>
+</div>-->
+
+<!-- EVENTS GRID -->
+<div class="container events-grid">
+
+    {% for event in events %}
+        <div class="event-card">
+
+            <!-- COVER IMAGE (ADMIN UPLOADED) -->
+            {% if event.cover_image %}
+                <img src="{{ event.cover_image.url }}" class="event-cover">
+            {% else %}
+                <img src="{% static 'events/images/default.jpg' %}" class="event-cover">
+            {% endif %}
+
+            <!-- CARD CONTENT -->
+            <div class="event-content">
+
+                <h3 class="event-title">{{ event.title }}</h3>
+
+                <p class="event-meta">
+                    {{ event.date }} • {{ event.location }}
+                </p>
+
+                <p class="event-desc">
+                    {{ event.description|truncatewords:18 }}
+                </p>
+
+                <a class="event-link" href="{% url 'event_detail' event.id %}">
+                    Learn more →
+                </a>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+        <p class="no-events">No outreach events available at the moment.</p>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

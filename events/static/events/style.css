@@ -1,0 +1,530 @@
+/* ================= CSS VARIABLES (CONSISTENCY) ================= */
+:root {
+    --primary-blue: #0b3c5d;
+    --accent-blue: #1f7a8c;
+    --light-bg: #f4f6f8;
+    --card-bg: #ffffff;
+    --text-dark: #1f2933;
+    --text-muted: #6b7280;
+    --link-blue: #0072ce;
+}
+
+/* ================= GLOBAL ================= */
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: var(--light-bg);
+    margin: 0;
+    padding: 0;
+    color: var(--text-dark);
+}
+
+h1, h2, h3 {
+    color: var(--primary-blue);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+p {
+    margin: 6px 0;
+    line-height: 1.65;
+    color: #333;
+}
+
+/* ================= TOP NAV BAR ================= */
+.top-bar {
+    background: var(--primary-blue);
+    color: white;
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.nav-links a {
+    color: white;
+    margin-left: 22px;
+    text-decoration: none;
+    font-size: 14.5px;
+    opacity: 0.9;
+}
+
+.nav-links a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+/* ================= PAGE CONTENT ================= */
+.content {
+    padding: 40px 25px;
+}
+
+/* ================= EVENT LIST PAGE ================= */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Grid */
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 26px;
+}
+
+/* ================= EVENT CARD ================= */
+.event-card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border-top: 4px solid var(--accent-blue);
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 26px rgba(0,0,0,0.14);
+}
+
+/* ===== EVENT COVER IMAGE ===== */
+.event-cover {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    background-color: #e5e7eb;
+    transition: transform 0.35s ease;
+}
+
+.event-card:hover .event-cover {
+    transform: scale(1.04);
+}
+
+/* ================= CARD CONTENT ================= */
+.event-content {
+    padding: 18px 18px 22px;
+}
+
+/* Event title */
+.event-title {
+    font-size: 16.2px;
+    font-weight: 600;
+    color: var(--primary-blue);
+    margin-bottom: 6px;
+}
+
+/* Meta info */
+.event-meta {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+/* Description */
+.event-desc {
+    font-size: 14px;
+    color: #374151;
+    margin-bottom: 14px;
+    line-height: 1.55;
+}
+
+/* Link */
+.event-link {
+    font-size: 14px;
+    color: var(--link-blue);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.event-link:hover {
+    text-decoration: underline;
+}
+
+/* ================= EVENT DETAIL PAGE ================= */
+.page-wrapper {
+    max-width: 1200px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 30px;
+    align-items: start;
+}
+
+.event-details,
+.media-section {
+    background: white;
+    padding: 26px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+/* ================= MEDIA GALLERY ================= */
+.media-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.media-gallery img,
+.media-gallery video {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #000;
+}
+
+/* ================= UPLOAD BOX ================= */
+.upload-box {
+    padding: 16px;
+    background: #f1f5f9;
+    border-radius: 8px;
+}
+
+.upload-box label {
+    font-size: 14px;
+    display: block;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+.upload-box select,
+.upload-box input[type="file"] {
+    margin-top: 6px;
+    width: 100%;
+}
+
+/* ================= PARTICIPANT TABLE ================= */
+.participant-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.participant-table th,
+.participant-table td {
+    border: 1px solid #d1d5db;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.participant-table th {
+    background-color: var(--accent-blue);
+    color: white;
+    font-weight: 600;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+    .page-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .content {
+        padding: 25px 18px;
+    }
+}
+/* ================= HERO BANNER ================= */
+
+.hero-banner {
+    position: relative;
+    width: 100%;
+    height: 360px;
+    background-image: url("/static/events/images/hero_banner.jpg");
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 40px;
+}
+
+/* Dark overlay */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+/* Text on top */
+/* HERO TEXT – RIGHT ALIGNED */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    /* RIGHT SIDE POSITIONING */
+    align-items: flex-end;
+    padding-right: 80px;
+    padding-left: 20px;
+
+    color: #ffffff;
+    text-align: right;
+}
+
+/* Text styles */
+.hero-content h1 {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #ffffff;
+}
+
+.hero-content p {
+    font-size: 18px;
+    max-width: 600px;
+    line-height: 1.6;
+    color: #ffffff;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-banner {
+        height: 260px;
+    }
+
+    .hero-content {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+    .hero-content h1 {
+        font-size: 28px;
+    }
+
+    .hero-content p {
+        font-size: 15px;
+    }
+}
+/* ================= EVENT DETAIL – MODERN UI ================= */
+
+.event-detail-wrapper {
+    max-width: 1200px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 30px;
+}
+
+/* Cards */
+.event-info-card,
+.event-media-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* Title */
+.event-main-title {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #0b3c5d;
+}
+
+/* Meta pills */
+.event-meta-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.meta-pill {
+    background: #eef5fb;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #0b3c5d;
+    font-weight: 500;
+}
+
+/* Description */
+.event-description {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+/* Section headings */
+.section-heading {
+    font-size: 20px;
+    margin: 25px 0 15px;
+    color: #0b3c5d;
+}
+
+/* Empty text */
+.empty-text {
+    font-size: 14px;
+    color: #777;
+}
+
+/* Media gallery */
+.media-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.media-gallery img,
+.media-gallery video {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #000;
+}
+
+/* Upload box */
+.upload-box {
+    background: #f4f8fc;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.upload-box h4 {
+    margin-bottom: 10px;
+}
+
+.upload-box .note {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .event-detail-wrapper {
+        grid-template-columns: 1fr;
+    }
+}
+/* ================= EVENT DETAIL HERO ================= */
+
+.event-hero {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 40px;
+}
+
+/* Dark overlay for readability */
+.event-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+/* Text content */
+.event-hero-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    /* RIGHT SIDE like AIMA */
+    align-items: flex-end;
+    padding-right: 80px;
+    padding-left: 20px;
+
+    color: #ffffff;
+    text-align: right;
+}
+
+.event-hero-content h1 {
+    font-size: 44px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #edf3f6;
+}
+
+.event-hero-content p {
+    font-size: 18px;
+    opacity: 0.9;
+    color: #ffffff;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .event-hero {
+        height: 280px;
+    }
+
+    .event-hero-content {
+        align-items: flex-start;
+        text-align: left;
+        padding: 24px;
+    }
+
+    .event-hero-content h1 {
+        font-size: 28px;
+    }
+}
+/* ================= MEDIA MODAL ================= */
+
+.media-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+}
+
+.media-modal.active {
+    display: flex;
+}
+
+.modal-content {
+    max-width: 90%;
+    max-height: 85%;
+    border-radius: 8px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 36px;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Make gallery items clickable */
+.media-gallery img,
+.media-gallery video {
+    cursor: pointer;
+}
+/* VIDEO THUMBNAIL */
+.video-thumb {
+    height: 140px;
+    background: linear-gradient(135deg, #222, #000);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.play-icon {
+    font-size: 40px;
+    color: #fff;
+    opacity: 0.85;
+}

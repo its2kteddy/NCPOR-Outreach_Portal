@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NCPS Outreach Portal</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'events/style.css' %}">
+</head>
+
+<body>
+
+<!-- NAVIGATION BAR -->
+<div class="top-bar">
+    <span class="logo">NCPS Outreach Portal</span>
+
+    <div class="nav-links">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'event_list' %}">Outreach Events</a>
+        <a href="/admin/">Admin</a>
+    </div>
+</div>
+
+<!-- PAGE CONTENT -->
+<div class="content">
+    {% block content %}{% endblock %}
+</div>
+<script>
+function openImage(src) {
+    const modal = document.getElementById("mediaModal");
+    const img = document.getElementById("modalImage");
+    const video = document.getElementById("modalVideo");
+
+    video.pause();
+    video.style.display = "none";
+
+    img.src = src;
+    img.style.display = "block";
+
+    modal.classList.add("active");
+}
+
+function openVideo(src) {
+    const modal = document.getElementById("mediaModal");
+    const img = document.getElementById("modalImage");
+    const video = document.getElementById("modalVideo");
+
+    img.style.display = "none";
+
+    video.src = src;
+    video.style.display = "block";
+    video.muted = true;   // ✅ REQUIRED
+    video.currentTime = 0;
+
+    modal.classList.add("active");
+
+    video.play().catch(() => {});
+}
+
+function closeModal() {
+    const modal = document.getElementById("mediaModal");
+    const video = document.getElementById("modalVideo");
+
+    video.pause();
+    modal.classList.remove("active");
+}
+</script>
+
+</body>
+</html>

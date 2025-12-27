@@ -1,0 +1,18 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+
+<div style="text-align:center; margin-top:60px;">
+    <h1>Welcome to NCPS Outreach Portal</h1>
+
+    <p style="font-size:18px; margin:20px auto; max-width:700px;">
+        This portal showcases outreach activities conducted by the
+        National Centre for Polar and Ocean Research (NCPS).
+    </p>
+
+    <a class="btn" href="{% url 'event_list' %}">
+        View Outreach Events
+    </a>
+</div>
+
+{% endblock %}

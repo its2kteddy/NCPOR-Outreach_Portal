@@ -1,0 +1,120 @@
+{% extends "events/base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- EVENT COVER HERO -->
+<div class="event-hero"
+     style="background-image: url('{{ event.cover_image.url }}');">
+
+    <div class="event-hero-overlay"></div>
+
+    <div class="event-hero-content">
+        <h1>{{ event.title }}</h1>
+        <p>{{ event.date }} • {{ event.location }}</p>
+    </div>
+
+</div>
+
+
+<div class="event-detail-wrapper">
+
+    <!-- LEFT : EVENT INFO -->
+    <div class="event-info-card">
+
+       <!-- <h1 class="event-main-title">{{ event.title }}</h1>-->
+
+        <!-- META PILLS -->
+        <div class="event-meta-row">
+            <span class="meta-pill">📅 {{ event.date }}</span>
+            <span class="meta-pill">📍 {{ event.location }}</span>
+        </div>
+
+        <p class="event-description">
+            {{ event.description }}
+        </p>
+
+        <!-- PARTICIPANTS -->
+        <h3 class="section-heading">Participant Details</h3>
+
+        {% if participants %}
+        <table class="participant-table">
+            <tr>
+                <th>University</th>
+                <th>Qualification</th>
+                <th>No. of Participants</th>
+            </tr>
+            {% for p in participants %}
+            <tr>
+                <td>{{ p.university }}</td>
+                <td>{{ p.get_qualification_display }}</td>
+                <td>{{ p.count }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p class="empty-text">No participant details available.</p>
+        {% endif %}
+
+    </div>
+
+    <!-- RIGHT : MEDIA + UPLOAD -->
+     <!-- RIGHT : MEDIA + UPLOAD -->
+    <div class="event-media-card">
+
+        <h3 class="section-heading">Media Gallery</h3>
+
+        {% if media %}
+        <div class="media-gallery">
+            {% for m in media %}
+                {% if m.media_type == "video" %}
+                 <div class="video-thumb"
+                   onclick="openVideo('{{ m.file.url }}')">
+                  <span class="play-icon">▶</span>
+                 </div>
+  
+                    
+                {% else %}
+                    <img src="{{ m.file.url }}" alt="Event photo"
+     onclick="openImage('{{ m.file.url }}')">
+
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% else %}
+            <p class="empty-text">No media uploaded yet.</p>
+        {% endif %}
+
+        <!-- UPLOAD BOX -->
+        <div class="upload-box">
+            <h4>Upload Photos / Videos</h4>
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn" type="submit">Upload</button>
+            </form>
+
+            <small class="note">
+                Uploaded media will be visible only after admin approval.
+            </small>
+        </div>
+
+    </div>
+
+</div>
+<!-- MEDIA MODAL -->
+<div id="mediaModal" class="media-modal" onclick="closeModal()">
+    <span class="close-btn">&times;</span>
+
+    <img id="modalImage" class="modal-content"
+         onclick="event.stopPropagation()" style="display:none;">
+
+    <video id="modalVideo" class="modal-content"
+           controls muted
+           onclick="event.stopPropagation()"
+           style="display:none;"></video>
+</div>
+
+
+
+{% endblock %}
