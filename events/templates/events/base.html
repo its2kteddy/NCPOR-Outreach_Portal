@@ -1,69 +1,197 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <title>NCPS Outreach Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NCPOR Outreach Portal{% endblock %}</title>
+    
+    <!-- Tailwind CSS 4 CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        ocean: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        polar: {
+                            50: '#ecfeff',
+                            100: '#cffafe',
+                            200: '#a5f3fc',
+                            300: '#67e8f9',
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                            700: '#0e7490',
+                            800: '#155e75',
+                            900: '#164e63',
+                        }
+                    },
+                    fontFamily: {
+                        display: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass {
+                @apply bg-white/10 backdrop-blur-lg border border-white/20;
+            }
+            .glass-dark {
+                @apply bg-gray-900/40 backdrop-blur-lg border border-gray-700/50;
+            }
+            .gradient-ocean {
+                @apply bg-gradient-to-br from-ocean-600 via-ocean-700 to-polar-800;
+            }
+            .gradient-ice {
+                @apply bg-gradient-to-br from-polar-100 via-ocean-50 to-white;
+            }
+            
+            /* Hero Media Zoom Effect */
+            .hero-media-zoom {
+                @apply transition-transform duration-300 ease-out;
+                transform-origin: center center;
+            }
+            
+            /* Hero Typography with Responsive Scaling */
+            .hero-title {
+                font-size: clamp(2rem, 5vw, 4rem);
+                line-height: 1.1;
+                font-weight: 800;
+                letter-spacing: -0.02em;
+            }
+            
+            .hero-description {
+                font-size: clamp(1rem, 2vw, 1.25rem);
+                line-height: 1.6;
+                max-width: 48rem;
+            }
+            
+            /* Hero CTA Buttons */
+            .hero-cta-primary {
+                @apply inline-flex items-center gap-2 px-8 py-4 bg-polar-400 text-ocean-900 
+                       rounded-xl font-bold text-base md:text-lg shadow-2xl shadow-polar-400/50
+                       hover:bg-polar-300 hover:scale-105 hover:shadow-polar-300/60
+                       transform transition-all duration-300 ease-out;
+            }
+            
+            .hero-cta-secondary {
+                @apply inline-flex items-center gap-2 px-8 py-4 glass backdrop-blur-lg
+                       border-2 border-white/40 text-white rounded-xl font-semibold text-base md:text-lg
+                       hover:bg-white/20 hover:scale-105 hover:border-white/60
+                       transform transition-all duration-300 ease-out;
+            }
+            
+            /* Slide-up Animation for Hero Content */
+            @keyframes slideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+            
+            .animate-slide-up {
+                animation: slideUp 0.8s ease-out forwards;
+                opacity: 0;
+            }
+            
+            .animate-fade-in {
+                animation: fadeIn 0.6s ease-out forwards;
+                opacity: 0;
+            }
+        }
+    </style>
+    
     {% load static %}
-    <link rel="stylesheet" href="{% static 'events/style.css' %}">
 </head>
 
-<body>
+<body class="bg-gradient-to-br from-gray-50 to-ocean-50/30 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
-<!-- NAVIGATION BAR -->
-<div class="top-bar">
-    <span class="logo">NCPS Outreach Portal</span>
-
-    <div class="nav-links">
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'event_list' %}">Outreach Events</a>
-        <a href="/admin/">Admin</a>
-    </div>
-</div>
+<!-- NAVIGATION -->
+{% include "includes/_navbar.html" %}
 
 <!-- PAGE CONTENT -->
-<div class="content">
+<main class="min-h-screen">
     {% block content %}{% endblock %}
-</div>
-<script>
-function openImage(src) {
-    const modal = document.getElementById("mediaModal");
-    const img = document.getElementById("modalImage");
-    const video = document.getElementById("modalVideo");
+</main>
 
-    video.pause();
-    video.style.display = "none";
+<!-- FOOTER -->
+<footer class="bg-gray-900 dark:bg-black text-gray-300 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center gap-3 mb-4">
+                    <img src="{% static 'events/images/ncpor-logo.png' %}" 
+                         alt="NCPOR Logo" 
+                         class="h-16 w-16 rounded-full shadow-lg ring-2 ring-ocean-500/30">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">NCPOR Outreach Portal</h3>
+                        <p class="text-sm text-gray-400">National Centre for Polar and Ocean Research</p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-400 mb-4">
+                    Connecting cutting-edge science with society through engaging outreach programs.
+                </p>
+            </div>
+            
+            <div>
+                <h4 class="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Quick Links</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="{% url 'home' %}" class="hover:text-ocean-400 transition">Home</a></li>
+                    <li><a href="{% url 'event_list' %}" class="hover:text-ocean-400 transition">Outreach Events</a></li>
+                    <li><a href="/admin/" class="hover:text-ocean-400 transition">Admin</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Contact</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li>Headland Sada, Vasco-da-Gama</li>
+                    <li>Goa 403804, India</li>
+                    <li class="mt-4">
+                        <a href="mailto:outreach@ncpor.res.in" class="hover:text-ocean-400 transition">
+                            outreach@ncpor.res.in
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-500">
+            <p>&copy; 2025 National Centre for Polar and Ocean Research. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
 
-    img.src = src;
-    img.style.display = "block";
-
-    modal.classList.add("active");
-}
-
-function openVideo(src) {
-    const modal = document.getElementById("mediaModal");
-    const img = document.getElementById("modalImage");
-    const video = document.getElementById("modalVideo");
-
-    img.style.display = "none";
-
-    video.src = src;
-    video.style.display = "block";
-    video.muted = true;   // ✅ REQUIRED
-    video.currentTime = 0;
-
-    modal.classList.add("active");
-
-    video.play().catch(() => {});
-}
-
-function closeModal() {
-    const modal = document.getElementById("mediaModal");
-    const video = document.getElementById("modalVideo");
-
-    video.pause();
-    modal.classList.remove("active");
-}
-</script>
+<script src="{% static 'events/js/main.js' %}"></script>
 
 </body>
 </html>

@@ -1,18 +1,458 @@
 {% extends "events/base.html" %}
 
+{% block title %}Home - NCPOR Outreach Portal{% endblock %}
+
 {% block content %}
 
-<div style="text-align:center; margin-top:60px;">
-    <h1>Welcome to NCPS Outreach Portal</h1>
+<!-- FULL-SCREEN FEATURED EVENT HERO -->
+{% if featured_event %}
+<section id="featured-hero" class="relative w-full h-screen overflow-hidden">
+    <!-- Media Container (Background) -->
+    <div class="absolute inset-0 w-full h-full">
+        <!-- Video Background (if exists) -->
+        {% if featured_event.videos.exists %}
+        <div id="heroVideo" class="absolute inset-0 w-full h-full">
+            {% with featured_event.videos.first as video %}
+            <video 
+                id="heroVideoPlayer"
+                class="w-full h-full object-cover hero-media-zoom"
+                autoplay 
+                muted 
+                loop 
+                playsinline
+                aria-label="Featured event video background">
+                <source src="{{ video.file.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            {% endwith %}
+            
+            <!-- Video Controls -->
+            <div class="absolute bottom-8 right-8 z-30 flex gap-3">
+                <button 
+                    id="videoPlayPause"
+                    class="p-3 rounded-full glass backdrop-blur-md hover:scale-110 transition-all duration-300"
+                    aria-label="Play or pause video">
+                    <svg id="playIcon" class="w-6 h-6 text-white hidden" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                    </svg>
+                    <svg id="pauseIcon" class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M5.75 3a.75.75 0 00-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 00.75-.75V3.75A.75.75 0 007.25 3h-1.5zM12.75 3a.75.75 0 00-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 00.75-.75V3.75a.75.75 0 00-.75-.75h-1.5z"/>
+                    </svg>
+                </button>
+                <button 
+                    id="videoMuteToggle"
+                    class="p-3 rounded-full glass backdrop-blur-md hover:scale-110 transition-all duration-300"
+                    aria-label="Mute or unmute video">
+                    <svg id="muteIcon" class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM12.293 7.293a1 1 0 011.414 0L15 8.586l1.293-1.293a1 1 0 111.414 1.414L16.414 10l1.293 1.293a1 1 0 01-1.414 1.414L15 11.414l-1.293 1.293a1 1 0 01-1.414-1.414L13.586 10l-1.293-1.293a1 1 0 010-1.414z"/>
+                    </svg>
+                    <svg id="unmuteIcon" class="w-6 h-6 text-white hidden" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Image Slider (if no video but has images) -->
+        {% elif featured_event.images.exists %}
+        <div id="heroSlider" class="absolute inset-0 w-full h-full">
+            {% for image in featured_event.images %}
+            <div class="hero-slide {% if forloop.first %}active{% endif %} absolute inset-0 w-full h-full transition-opacity duration-1000"
+                 data-slide="{{ forloop.counter0 }}"
+                 style="{% if not forloop.first %}opacity: 0;{% endif %}">
+                <img 
+                    src="{{ image.file.url }}" 
+                    alt="{{ featured_event.title }} - Image {{ forloop.counter }}"
+                    class="w-full h-full object-cover hero-media-zoom">
+            </div>
+            {% endfor %}
+            
+            <!-- Slider Controls (only show if multiple images) -->
+            {% if featured_event.images.count > 1 %}
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex gap-2">
+                {% for image in featured_event.images %}
+                <button 
+                    class="slider-dot w-3 h-3 rounded-full transition-all duration-300 {% if forloop.first %}bg-white scale-125{% else %}bg-white/50 hover:bg-white/75{% endif %}"
+                    data-slide="{{ forloop.counter0 }}"
+                    aria-label="Go to slide {{ forloop.counter }}">
+                </button>
+                {% endfor %}
+            </div>
+            
+            <!-- Previous/Next Arrows -->
+            <button 
+                id="prevSlide"
+                class="absolute left-8 top-1/2 transform -translate-y-1/2 z-30 p-4 rounded-full glass backdrop-blur-md hover:scale-110 transition-all duration-300"
+                aria-label="Previous image">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <button 
+                id="nextSlide"
+                class="absolute right-8 top-1/2 transform -translate-y-1/2 z-30 p-4 rounded-full glass backdrop-blur-md hover:scale-110 transition-all duration-300"
+                aria-label="Next image">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+            {% endif %}
+        </div>
+        
+        <!-- Fallback: Cover Image -->
+        {% elif featured_event.cover_image %}
+        <div class="absolute inset-0 w-full h-full">
+            <img 
+                src="{{ featured_event.cover_image.url }}" 
+                alt="{{ featured_event.title }}"
+                class="w-full h-full object-cover hero-media-zoom">
+        </div>
+        
+        <!-- Final Fallback: Gradient -->
+        {% else %}
+        <div class="absolute inset-0 w-full h-full gradient-ocean">
+            <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                <div class="absolute top-20 left-10 w-72 h-72 bg-polar-400/30 rounded-full blur-3xl animate-pulse"></div>
+                <div class="absolute bottom-20 right-10 w-96 h-96 bg-ocean-400/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <!-- Gradient Overlay for Text Readability -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
+    
+    <!-- Content Overlay -->
+    <div class="relative z-20 h-full flex items-end">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-24 w-full">
+            <div class="max-w-4xl">
+                <!-- Featured Badge -->
+                <div class="flex items-center gap-3 mb-4 md:mb-6 animate-fade-in">
+                    <span class="px-4 py-2 bg-polar-400 text-ocean-900 rounded-full text-sm md:text-base font-bold shadow-lg">
+                        ✨ Featured Event
+                    </span>
+                    <span class="px-4 py-2 glass backdrop-blur-md text-white rounded-full text-sm md:text-base font-semibold">
+                        Latest
+                    </span>
+                </div>
+                
+                <!-- Event Title -->
+                <h1 class="hero-title text-white mb-4 md:mb-6 animate-slide-up" style="animation-delay: 0.2s;">
+                    {{ featured_event.title }}
+                </h1>
+                
+                <!-- Event Meta -->
+                <div class="flex flex-wrap items-center gap-4 md:gap-6 mb-6 md:mb-8 text-white/90 animate-slide-up" style="animation-delay: 0.4s;">
+                    <div class="flex items-center gap-2 text-base md:text-lg">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"/>
+                        </svg>
+                        <span class="font-medium">{{ featured_event.date|date:"F j, Y" }}</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-base md:text-lg">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"/>
+                        </svg>
+                        <span class="font-medium">{{ featured_event.location }}</span>
+                    </div>
+                </div>
+                
+                <!-- Event Description -->
+                <p class="hero-description text-white/90 mb-8 md:mb-10 animate-slide-up" style="animation-delay: 0.6s;">
+                    {{ featured_event.description|truncatewords:30 }}
+                </p>
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-wrap gap-4 animate-slide-up" style="animation-delay: 0.8s;">
+                    <a href="{% url 'event_detail' featured_event.id %}" 
+                       class="hero-cta-primary group">
+                        <span>View Full Details</span>
+                        <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                    <a href="{% url 'event_list' %}" 
+                       class="hero-cta-secondary">
+                        Browse All Events
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce hidden md:block">
+        <a href="#events-overview" class="flex flex-col items-center gap-2 text-white/80 hover:text-white transition-colors">
+            <span class="text-sm font-medium">Scroll Down</span>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
+        </a>
+    </div>
+</section>
 
-    <p style="font-size:18px; margin:20px auto; max-width:700px;">
-        This portal showcases outreach activities conducted by the
-        National Centre for Polar and Ocean Research (NCPS).
-    </p>
+<!-- Fallback Hero (No Featured Event) -->
+{% else %}
+<section class="relative min-h-screen flex items-center overflow-hidden gradient-ocean">
+    <!-- Animated background blobs -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-polar-400/30 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-ocean-400/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+        <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-white/10 rounded-full blur-2xl animate-pulse" style="animation-delay: 2s;"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+        <div class="text-center text-white space-y-6">
+            <h1 class="text-5xl md:text-6xl font-bold leading-tight">
+                Connecting <span class="text-polar-200">Polar & Ocean</span> Science with Society
+            </h1>
+            <p class="text-xl text-polar-100/90 leading-relaxed max-w-3xl mx-auto">
+                Engaging students, educators, and the public through interactive workshops, 
+                field visits, exhibitions, and scientific talks on polar and ocean research.
+            </p>
+            <div class="flex flex-wrap gap-4 pt-4 justify-center">
+                <a href="{% url 'event_list' %}" 
+                   class="px-8 py-4 bg-white text-ocean-700 rounded-xl font-semibold 
+                          hover:scale-105 hover:shadow-2xl hover:shadow-white/20
+                          transform transition-all duration-300">
+                    Browse Upcoming Events
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
 
-    <a class="btn" href="{% url 'event_list' %}">
-        View Outreach Events
-    </a>
-</div>
+<!-- EVENTS OVERVIEW SECTION -->
+<section class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            
+            <!-- Upcoming Events -->
+            <div class="reveal">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Upcoming Events</h2>
+                    <a href="{% url 'event_list' %}" 
+                       class="text-ocean-600 dark:text-ocean-400 hover:text-ocean-700 font-semibold flex items-center gap-2">
+                        View All →
+                    </a>
+                </div>
+                
+                {% if upcoming_events %}
+                <div class="space-y-4">
+                    {% for event in upcoming_events|slice:":3" %}
+                    <div class="glass dark:glass-dark p-6 rounded-xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-ocean-600 dark:group-hover:text-ocean-400 transition-colors">
+                                {{ event.title }}
+                            </h3>
+                            <span class="px-3 py-1 bg-ocean-100 dark:bg-ocean-900/50 text-ocean-700 dark:text-ocean-300 rounded-full text-xs font-semibold whitespace-nowrap ml-2">
+                                {{ event.event_type }}
+                            </span>
+                        </div>
+                        <div class="flex flex-wrap gap-3 text-sm text-gray-600 dark:text-gray-400 mb-4">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                                </svg>
+                                {{ event.date|date:"M d, Y" }}
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                                </svg>
+                                {{ event.location }}
+                            </span>
+                        </div>
+                        <a href="{% url 'event_detail' event.id %}" 
+                           class="inline-flex items-center gap-2 text-ocean-600 dark:text-ocean-400 hover:gap-3 font-semibold transition-all duration-300">
+                            Learn More
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="glass dark:glass-dark p-12 rounded-xl text-center">
+                    <div class="text-6xl mb-4">📅</div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">No Upcoming Events</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Stay tuned for new outreach opportunities!</p>
+                    <a href="{% url 'event_list' %}" 
+                       class="inline-block px-6 py-3 bg-ocean-600 text-white rounded-lg hover:bg-ocean-700 transition-colors">
+                        View All Events
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Past Highlights -->
+            <div class="reveal" style="animation-delay: 0.2s;">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Past Highlights</h2>
+                    <a href="{% url 'event_list' %}" 
+                       class="text-ocean-600 dark:text-ocean-400 hover:text-ocean-700 font-semibold flex items-center gap-2">
+                        View All →
+                    </a>
+                </div>
+                
+                {% if past_events %}
+                <div class="grid grid-cols-2 gap-4" id="past-highlights">
+                    {% for event in past_events|slice:":4" %}
+                    <a href="{% url 'event_detail' event.id %}" 
+                       class="group block glass dark:glass-dark rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        {% if event.cover_image %}
+                        <div class="aspect-video overflow-hidden">
+                            <img src="{{ event.cover_image.url }}" 
+                                 alt="{{ event.title }}"
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        {% else %}
+                        <div class="aspect-video bg-gradient-to-br from-ocean-400 to-polar-500 flex items-center justify-center">
+                            <span class="text-4xl">🌊</span>
+                        </div>
+                        {% endif %}
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-900 dark:text-white mb-1 group-hover:text-ocean-600 dark:group-hover:text-ocean-400 transition-colors line-clamp-2">
+                                {{ event.title }}
+                            </h3>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">{{ event.date|date:"M d, Y" }}</p>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="glass dark:glass-dark p-12 rounded-xl text-center">
+                    <div class="text-6xl mb-4">🏆</div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">No Past Events</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Past event highlights will appear here.</p>
+                </div>
+                {% endif %}
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<!-- STATS SECTION -->
+<section class="py-20 px-4 sm:px-6 lg:px-8 gradient-ocean reveal">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="text-center glass-dark p-8 rounded-2xl transform hover:scale-105 transition-all duration-300">
+                <div class="text-5xl font-bold text-white mb-2 counter" data-target="100">0</div>
+                <div class="text-polar-200 font-semibold">Events Conducted</div>
+            </div>
+            <div class="text-center glass-dark p-8 rounded-2xl transform hover:scale-105 transition-all duration-300">
+                <div class="text-5xl font-bold text-white mb-2"><span class="counter" data-target="5000">0</span>+</div>
+                <div class="text-polar-200 font-semibold">Participants Reached</div>
+            </div>
+            <div class="text-center glass-dark p-8 rounded-2xl transform hover:scale-105 transition-all duration-300">
+                <div class="text-5xl font-bold text-white mb-2 counter" data-target="50">0</div>
+                <div class="text-polar-200 font-semibold">Partner Institutions</div>
+            </div>
+            <div class="text-center glass-dark p-8 rounded-2xl transform hover:scale-105 transition-all duration-300">
+                <div class="text-5xl font-bold text-white mb-2 counter" data-target="25">0</div>
+                <div class="text-polar-200 font-semibold">Cities Covered</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT NCPOR OUTREACH SECTION -->
+<section id="about" class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16 reveal">
+            <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">About NCPOR Outreach</h2>
+            <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                The National Centre for Polar and Ocean Research (NCPOR) is committed to sharing 
+                the wonders of polar and ocean science with society through diverse outreach programs.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="reveal glass dark:glass-dark p-8 rounded-2xl text-center hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                <div class="text-6xl mb-4">🧑‍🏫</div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Workshops</h3>
+                <p class="text-gray-600 dark:text-gray-400">
+                    Hands-on learning experiences for students and educators on polar and ocean topics.
+                </p>
+            </div>
+            
+            <div class="reveal glass dark:glass-dark p-8 rounded-2xl text-center hover:shadow-xl hover:-translate-y-2 transition-all duration-300" style="animation-delay: 0.1s;">
+                <div class="text-6xl mb-4">🏛️</div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Exhibitions</h3>
+                <p class="text-gray-600 dark:text-gray-400">
+                    Interactive displays showcasing cutting-edge polar and ocean research discoveries.
+                </p>
+            </div>
+            
+            <div class="reveal glass dark:glass-dark p-8 rounded-2xl text-center hover:shadow-xl hover:-translate-y-2 transition-all duration-300" style="animation-delay: 0.2s;">
+                <div class="text-6xl mb-4">🏃</div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Field Visits</h3>
+                <p class="text-gray-600 dark:text-gray-400">
+                    Immersive experiences connecting participants with real-world research environments.
+                </p>
+            </div>
+            
+            <div class="reveal glass dark:glass-dark p-8 rounded-2xl text-center hover:shadow-xl hover:-translate-y-2 transition-all duration-300" style="animation-delay: 0.3s;">
+                <div class="text-6xl mb-4">🎤</div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Scientific Talks</h3>
+                <p class="text-gray-600 dark:text-gray-400">
+                    Expert lectures and discussions on polar science, climate change, and ocean conservation.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CALL TO ACTION SECTION -->
+<section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 reveal">
+    <div class="max-w-5xl mx-auto">
+        <div class="glass dark:glass-dark p-12 rounded-3xl text-center bg-gradient-to-br from-ocean-500/10 to-polar-500/10 dark:from-ocean-900/30 dark:to-polar-900/30">
+            <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Partner with Us</h2>
+            <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+                Are you an institution, school, or college interested in bringing polar and ocean science 
+                outreach to your community? Let's collaborate!
+            </p>
+            <a href="mailto:outreach@ncpor.res.in" 
+               class="inline-block px-10 py-5 bg-ocean-600 hover:bg-ocean-700 text-white rounded-xl font-bold text-lg 
+                      transform hover:scale-105 hover:shadow-2xl hover:shadow-ocean-500/50 transition-all duration-300">
+                Propose an Outreach Event
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-out;
+}
+
+.slide-in-right {
+    animation: slideInRight 0.8s ease-out;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
 
 {% endblock %}

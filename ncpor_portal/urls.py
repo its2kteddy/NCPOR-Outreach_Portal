@@ -19,9 +19,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-admin.site.site_header = "NCPS Outreach Administration"
-admin.site.site_title = "NCPS Admin Portal"
-admin.site.index_title = "Welcome to NCPS Outreach Management"
+admin.site.site_header = "NCPOR Outreach Events Administration"
+admin.site.site_title = "NCPOR Admin Portal"
+admin.site.index_title = "Welcome to NCPOR Outreach Management"
 
 
 urlpatterns = [

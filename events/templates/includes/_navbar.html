@@ -1,0 +1,134 @@
+{% load static %}
+
+<nav class="fixed top-0 left-0 right-0 z-50 glass dark:glass-dark shadow-lg transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo & Site Name -->
+            <div class="flex items-center space-x-3">
+                <a href="{% url 'home' %}" class="flex items-center space-x-3 group">
+                    <div class="relative">
+                        <img src="{% static 'events/images/ncpor-logo.png' %}" 
+                             alt="NCPOR Logo" 
+                             class="h-12 w-12 rounded-full shadow-lg group-hover:shadow-ocean-500/50 
+                                    transform group-hover:scale-110 group-hover:rotate-3 
+                                    transition-all duration-300 ease-out
+                                    ring-2 ring-ocean-500/20 group-hover:ring-ocean-500/60">
+                        <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-ocean-500/0 to-ocean-500/20 
+                                    opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="hidden sm:block">
+                        <div class="text-lg font-bold text-ocean-700 dark:text-ocean-300 
+                                    group-hover:text-ocean-600 dark:group-hover:text-ocean-200 
+                                    transition-colors duration-300">
+                            NCPOR Outreach
+                        </div>
+                        <div class="text-xs text-gray-600 dark:text-gray-400 -mt-1 
+                                    group-hover:text-ocean-600 dark:group-hover:text-ocean-400 
+                                    transition-colors duration-300">
+                            Polar & Ocean Science
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-1">
+                <a href="{% url 'home' %}" 
+                   class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+                          {% if request.resolver_match.url_name == 'home' %}
+                              bg-ocean-600 text-white shadow-lg shadow-ocean-500/50
+                          {% else %}
+                              text-gray-700 dark:text-gray-300 hover:bg-ocean-100 dark:hover:bg-ocean-900/30
+                          {% endif %}">
+                    Home
+                </a>
+                <a href="{% url 'event_list' %}" 
+                   class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+                          {% if request.resolver_match.url_name == 'event_list' %}
+                              bg-ocean-600 text-white shadow-lg shadow-ocean-500/50
+                          {% else %}
+                              text-gray-700 dark:text-gray-300 hover:bg-ocean-100 dark:hover:bg-ocean-900/30
+                          {% endif %}">
+                    Outreach Events
+                </a>
+                <a href="{% url 'home' %}#about" 
+                   class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 
+                          hover:bg-ocean-100 dark:hover:bg-ocean-900/30 transition-all duration-200">
+                    About
+                </a>
+                <a href="{% url 'home' %}#contact" 
+                   class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 
+                          hover:bg-ocean-100 dark:hover:bg-ocean-900/30 transition-all duration-200">
+                    Contact
+                </a>
+                <a href="/admin/" 
+                   class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 
+                          hover:bg-ocean-100 dark:hover:bg-ocean-900/30 transition-all duration-200">
+                    Admin
+                </a>
+            </div>
+            
+            <!-- Dark Mode Toggle & Mobile Menu Button -->
+            <div class="flex items-center space-x-2">
+                <button id="darkModeToggle" 
+                        class="p-2 rounded-lg glass dark:glass-dark hover:scale-110 transition-transform duration-200"
+                        aria-label="Toggle dark mode">
+                    <svg class="w-5 h-5 text-gray-800 dark:text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
+                        <path class="dark:hidden" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
+                        <path class="hidden dark:block" d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+                    </svg>
+                </button>
+                
+                <button id="mobileMenuBtn" 
+                        class="md:hidden p-2 rounded-lg glass dark:glass-dark hover:scale-110 transition-transform duration-200"
+                        aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden pb-4">
+            <div class="flex flex-col space-y-2">
+                <a href="{% url 'home' %}" 
+                   class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+                          {% if request.resolver_match.url_name == 'home' %}
+                              bg-ocean-600 text-white
+                          {% else %}
+                              text-gray-700 dark:text-gray-300 hover:bg-ocean-100 dark:hover:bg-ocean-900/30
+                          {% endif %}">
+                    Home
+                </a>
+                <a href="{% url 'event_list' %}" 
+                   class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+                          {% if request.resolver_match.url_name == 'event_list' %}
+                              bg-ocean-600 text-white
+                          {% else %}
+                              text-gray-700 dark:text-gray-300 hover:bg-ocean-100 dark:hover:bg-ocean-900/30
+                          {% endif %}">
+                    Outreach Events
+                </a>
+                <a href="{% url 'home' %}#about" 
+                   class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 
+                          hover:bg-ocean-100 dark:hover:bg-ocean-900/30 transition-all duration-200">
+                    About
+                </a>
+                <a href="{% url 'home' %}#contact" 
+                   class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 
+                          hover:bg-ocean-100 dark:hover:bg-ocean-900/30 transition-all duration-200">
+                    Contact
+                </a>
+                <a href="/admin/" 
+                   class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 
+                          hover:bg-ocean-100 dark:hover:bg-ocean-900/30 transition-all duration-200">
+                    Admin
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Spacer to prevent content from hiding under fixed navbar -->
+<div class="h-16"></div>

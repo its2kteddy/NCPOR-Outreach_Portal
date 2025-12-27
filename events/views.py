@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import JsonResponse
 from .models import Event
+from .services import EventService
 from mediafiles.models import EventMedia
 from mediafiles.forms import EventMediaForm
 from participants.models import Participant
@@ -7,7 +9,9 @@ from participants.models import Participant
 
 # HOME PAGE
 def home(request):
-    return render(request, 'events/home.html')
+    """Home page with featured events, upcoming and past highlights."""
+    context = EventService.get_home_page_data()
+    return render(request, 'events/home.html', context)
 
 
 # EVENT LIST PAGE
@@ -46,3 +50,28 @@ def event_detail(request, event_id):
         'participants': participants,
         'form': form
     })
+
+
+# ================= API ENDPOINTS =================
+
+def api_featured_events(request):
+    """JSON API: Latest events for hero slider."""
+    events = EventService.get_home_page_data()['latest_events']
+    data = [EventService.get_event_json_data(e) for e in events]
+    return JsonResponse({'events': data})
+
+
+def api_upcoming_events(request):
+    """JSON API: Upcoming events."""
+    from .selectors import get_upcoming_events
+    events = get_upcoming_events(limit=12)
+    data = [EventService.get_event_json_data(e) for e in events]
+    return JsonResponse({'events': data})
+
+
+def api_past_highlights(request):
+    """JSON API: Past event highlights."""
+    from .selectors import get_past_events
+    events = get_past_events(limit=12)
+    data = [EventService.get_event_json_data(e) for e in events]
+    return JsonResponse({'events': data})

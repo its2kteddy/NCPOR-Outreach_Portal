@@ -1,0 +1,21 @@
+{% load static %}
+
+<a class="home-event-card" href="{% url 'event_detail' event.id %}">
+    {% if event.cover_image %}
+        <img class="home-event-thumb" src="{{ event.cover_image.url }}" alt="{{ event.title }}" loading="lazy">
+    {% else %}
+        <img class="home-event-thumb" src="{% static 'events/images/default.jpg' %}" alt="{{ event.title }}" loading="lazy">
+    {% endif %}
+
+    <div class="home-event-body">
+        <div class="home-event-title">{{ event.title }}</div>
+        <div class="home-event-meta">
+            <span>📅 {{ event.date }}</span>
+            <span>📍 {{ event.location }}</span>
+        </div>
+        {% if show_description %}
+        <div class="home-event-desc">{{ event.description|truncatewords:18 }}</div>
+        {% endif %}
+        <div class="home-event-cta">View Details →</div>
+    </div>
+</a>

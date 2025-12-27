@@ -1,120 +1,289 @@
 {% extends "events/base.html" %}
 {% load static %}
 
+{% block title %}{{ event.title }} - NCPOR Outreach Portal{% endblock %}
+
 {% block content %}
-<!-- EVENT COVER HERO -->
-<div class="event-hero"
-     style="background-image: url('{{ event.cover_image.url }}');">
 
-    <div class="event-hero-overlay"></div>
-
-    <div class="event-hero-content">
-        <h1>{{ event.title }}</h1>
-        <p>{{ event.date }} • {{ event.location }}</p>
-    </div>
-
-</div>
-
-
-<div class="event-detail-wrapper">
-
-    <!-- LEFT : EVENT INFO -->
-    <div class="event-info-card">
-
-       <!-- <h1 class="event-main-title">{{ event.title }}</h1>-->
-
-        <!-- META PILLS -->
-        <div class="event-meta-row">
-            <span class="meta-pill">📅 {{ event.date }}</span>
-            <span class="meta-pill">📍 {{ event.location }}</span>
+<!-- EVENT HERO HEADER -->
+<section class="relative h-96 overflow-hidden">
+    {% if event.cover_image %}
+    <img src="{{ event.cover_image.url }}" 
+         alt="{{ event.title }}"
+         class="absolute inset-0 w-full h-full object-cover">
+    {% else %}
+    <div class="absolute inset-0 gradient-ocean"></div>
+    {% endif %}
+    
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+    
+    <div class="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-end pb-12">
+        <div class="text-white">
+            <!-- Back Button -->
+            <a href="{% url 'event_list' %}" 
+               class="inline-flex items-center gap-2 px-4 py-2 glass-dark rounded-lg mb-6 hover:bg-white/20 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                Back to Events
+            </a>
+            
+            <span class="inline-block px-4 py-2 bg-ocean-600 rounded-full text-sm font-semibold mb-4">
+                {{ event.event_type }}
+            </span>
+            
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ event.title }}</h1>
+            
+            <div class="flex flex-wrap gap-6 text-lg">
+                <span class="flex items-center gap-2">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                    </svg>
+                    {{ event.date|date:"F d, Y" }}
+                </span>
+                <span class="flex items-center gap-2">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                    </svg>
+                    {{ event.location }}
+                </span>
+            </div>
         </div>
-
-        <p class="event-description">
-            {{ event.description }}
-        </p>
-
-        <!-- PARTICIPANTS -->
-        <h3 class="section-heading">Participant Details</h3>
-
-        {% if participants %}
-        <table class="participant-table">
-            <tr>
-                <th>University</th>
-                <th>Qualification</th>
-                <th>No. of Participants</th>
-            </tr>
-            {% for p in participants %}
-            <tr>
-                <td>{{ p.university }}</td>
-                <td>{{ p.get_qualification_display }}</td>
-                <td>{{ p.count }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-        {% else %}
-            <p class="empty-text">No participant details available.</p>
-        {% endif %}
-
     </div>
+</section>
 
-    <!-- RIGHT : MEDIA + UPLOAD -->
-     <!-- RIGHT : MEDIA + UPLOAD -->
-    <div class="event-media-card">
-
-        <h3 class="section-heading">Media Gallery</h3>
-
-        {% if media %}
-        <div class="media-gallery">
-            {% for m in media %}
-                {% if m.media_type == "video" %}
-                 <div class="video-thumb"
-                   onclick="openVideo('{{ m.file.url }}')">
-                  <span class="play-icon">▶</span>
-                 </div>
-  
+<!-- EVENT DETAILS -->
+<section class="py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            
+            <!-- MAIN CONTENT -->
+            <div class="lg:col-span-2 space-y-8">
+                
+                <!-- Description -->
+                <div class="glass dark:glass-dark p-8 rounded-2xl">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+                        <svg class="w-7 h-7 text-ocean-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        About This Event
+                    </h2>
+                    <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 leading-relaxed">
+                        {{ event.description|linebreaks }}
+                    </div>
+                </div>
+                
+                <!-- Participants Table -->
+                <div class="glass dark:glass-dark p-8 rounded-2xl">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+                        <svg class="w-7 h-7 text-ocean-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/>
+                        </svg>
+                        Participants
+                    </h2>
                     
-                {% else %}
-                    <img src="{{ m.file.url }}" alt="Event photo"
-     onclick="openImage('{{ m.file.url }}')">
-
-                {% endif %}
-            {% endfor %}
+                    {% if participants %}
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b-2 border-ocean-200 dark:border-ocean-800">
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">University</th>
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">Qualification</th>
+                                    <th class="text-center py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for p in participants %}
+                                <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-ocean-50 dark:hover:bg-ocean-900/20 transition-colors">
+                                    <td class="py-4 px-4 text-gray-800 dark:text-gray-200">{{ p.university }}</td>
+                                    <td class="py-4 px-4 text-gray-600 dark:text-gray-400">{{ p.get_qualification_display }}</td>
+                                    <td class="py-4 px-4 text-center font-semibold text-ocean-600 dark:text-ocean-400">{{ p.count }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-8">
+                        <div class="text-4xl mb-2">👥</div>
+                        <p class="text-gray-600 dark:text-gray-400">No participant details available.</p>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Media Gallery -->
+                <div class="glass dark:glass-dark p-8 rounded-2xl">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+                        <svg class="w-7 h-7 text-ocean-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                        </svg>
+                        Media Gallery
+                    </h2>
+                    
+                    {% if media %}
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        {% for m in media %}
+                        <div class="group relative aspect-square overflow-hidden rounded-xl cursor-pointer hover:shadow-xl transition-all duration-300"
+                             onclick="openMedia('{{ m.file.url }}', '{{ m.media_type }}')">
+                            
+                            {% if m.media_type == "video" %}
+                            <div class="absolute inset-0 bg-gradient-to-br from-ocean-600 to-polar-700 flex items-center justify-center">
+                                <svg class="w-16 h-16 text-white group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                                </svg>
+                            </div>
+                            {% else %}
+                            <img src="{{ m.file.url }}" 
+                                 alt="Event media"
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            {% endif %}
+                            
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                                <span class="text-white text-sm font-semibold">{{ m.media_type|title }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-8">
+                        <div class="text-4xl mb-2">📸</div>
+                        <p class="text-gray-600 dark:text-gray-400">No media available for this event.</p>
+                    </div>
+                    {% endif %}
+                </div>
+                
+            </div>
+            
+            <!-- SIDEBAR -->
+            <div class="space-y-6">
+                
+                <!-- Info Cards -->
+                <div class="glass dark:glass-dark p-6 rounded-2xl">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Event Details</h3>
+                    <div class="space-y-4 text-sm">
+                        <div>
+                            <div class="text-gray-500 dark:text-gray-400 mb-1">Event Type</div>
+                            <div class="font-semibold text-gray-900 dark:text-white">{{ event.event_type }}</div>
+                        </div>
+                        <div>
+                            <div class="text-gray-500 dark:text-gray-400 mb-1">Date</div>
+                            <div class="font-semibold text-gray-900 dark:text-white">{{ event.date|date:"F d, Y" }}</div>
+                        </div>
+                        <div>
+                            <div class="text-gray-500 dark:text-gray-400 mb-1">Location</div>
+                            <div class="font-semibold text-gray-900 dark:text-white">{{ event.location }}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Upload Media Form -->
+                <div class="glass dark:glass-dark p-6 rounded-2xl">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-ocean-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z"/>
+                        </svg>
+                        Share Your Media
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Upload photos or videos from this event.</p>
+                    <form method="post" enctype="multipart/form-data" class="space-y-4">
+                        {% csrf_token %}
+                        
+                        <!-- File Input -->
+                        <div>
+                            <label for="id_file" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                Select File
+                            </label>
+                            <input type="file" 
+                                   id="id_file"
+                                   name="file" 
+                                   accept="image/*,video/*"
+                                   required
+                                   class="w-full px-4 py-3 bg-white dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg 
+                                          file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 
+                                          file:bg-ocean-100 dark:file:bg-ocean-900 file:text-ocean-700 dark:file:text-ocean-300 
+                                          file:font-semibold hover:file:bg-ocean-200 dark:hover:file:bg-ocean-800
+                                          text-gray-700 dark:text-gray-300">
+                        </div>
+                        
+                        <!-- Media Type -->
+                        <div>
+                            <label for="id_media_type" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                Media Type
+                            </label>
+                            <select id="id_media_type" 
+                                    name="media_type" 
+                                    required
+                                    class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                           focus:ring-2 focus:ring-ocean-500 focus:border-transparent outline-none
+                                           text-gray-900 dark:text-white">
+                                <option value="image">Image</option>
+                                <option value="video">Video</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" 
+                                class="w-full px-6 py-3 bg-ocean-600 hover:bg-ocean-700 text-white rounded-lg font-semibold 
+                                       transform hover:scale-105 transition-all duration-200">
+                            Upload Media
+                        </button>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 text-center">
+                            Uploaded media will be visible after admin approval
+                        </p>
+                    </form>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="space-y-3">
+                    <a href="{% url 'event_list' %}" 
+                       class="block w-full px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white text-center rounded-lg font-semibold 
+                              hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                        View All Events
+                    </a>
+                </div>
+                
+            </div>
+            
         </div>
-        {% else %}
-            <p class="empty-text">No media uploaded yet.</p>
-        {% endif %}
-
-        <!-- UPLOAD BOX -->
-        <div class="upload-box">
-            <h4>Upload Photos / Videos</h4>
-
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button class="btn" type="submit">Upload</button>
-            </form>
-
-            <small class="note">
-                Uploaded media will be visible only after admin approval.
-            </small>
-        </div>
-
     </div>
+</section>
 
-</div>
-<!-- MEDIA MODAL -->
-<div id="mediaModal" class="media-modal" onclick="closeModal()">
-    <span class="close-btn">&times;</span>
-
-    <img id="modalImage" class="modal-content"
-         onclick="event.stopPropagation()" style="display:none;">
-
-    <video id="modalVideo" class="modal-content"
-           controls muted
-           onclick="event.stopPropagation()"
-           style="display:none;"></video>
+<!-- Media Modal -->
+<div id="mediaModal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4" onclick="closeMediaModal()">
+    <button onclick="closeMediaModal()" class="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+    </button>
+    <img id="modalImage" src="" alt="Full size" class="hidden max-w-full max-h-full rounded-lg" onclick="event.stopPropagation()">
+    <video id="modalVideo" controls class="hidden max-w-full max-h-full rounded-lg" onclick="event.stopPropagation()"></video>
 </div>
 
+<script>
+function openMedia(url, type) {
+    const modal = document.getElementById('mediaModal');
+    const img = document.getElementById('modalImage');
+    const video = document.getElementById('modalVideo');
+    
+    if (type === 'video') {
+        img.classList.add('hidden');
+        video.src = url;
+        video.classList.remove('hidden');
+        video.play();
+    } else {
+        video.classList.add('hidden');
+        img.src = url;
+        img.classList.remove('hidden');
+    }
+    
+    modal.classList.remove('hidden');
+}
 
+function closeMediaModal() {
+    const modal = document.getElementById('mediaModal');
+    const video = document.getElementById('modalVideo');
+    video.pause();
+    modal.classList.add('hidden');
+}
+</script>
 
 {% endblock %}

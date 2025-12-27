@@ -1,0 +1,15 @@
+{% load static %}
+
+<div
+    class="home-hero-slide{% if is_active %} is-active{% endif %}"
+    data-slide="{{ index }}"
+    data-event-id="{{ event.id }}"
+    data-title="{{ event.title }}"
+    data-date="{{ event.date }}"
+    data-location="{{ event.location }}"
+    data-description="{{ event.description|truncatewords:28 }}"
+    style="background-image:
+        {% if event.cover_image %}url('{{ event.cover_image.url }}')
+        {% else %}url('{% static 'events/images/hero_banner.jpg' %}')
+        {% endif %};">
+</div>

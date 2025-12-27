@@ -1,0 +1,296 @@
+{% extends "events/base.html" %}
+
+{% block title %}About - NCPOR Outreach Portal{% endblock %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+<section class="relative py-20 px-4 sm:px-6 lg:px-8 gradient-ocean overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-10 right-10 w-96 h-96 bg-polar-400/20 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-10 left-10 w-72 h-72 bg-ocean-400/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+    </div>
+    
+    <div class="max-w-5xl mx-auto text-center relative z-10">
+        <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">About NCPOR Outreach</h1>
+        <p class="text-2xl text-polar-100 leading-relaxed">
+            Bridging cutting-edge polar and ocean research with society through engaging outreach programs.
+        </p>
+    </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<section class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto space-y-20">
+        
+        <!-- MISSION SECTION -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal">
+            <div>
+                <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-6">Our Mission</h2>
+                <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                    The National Centre for Polar and Ocean Research (NCPOR) is India's premier institution 
+                    for polar and Southern Ocean research. Our outreach program is dedicated to sharing 
+                    the excitement of scientific discovery with students, educators, and the general public.
+                </p>
+                <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                    Through interactive workshops, exhibitions, field visits, and expert talks, we aim to 
+                    inspire the next generation of scientists and foster public understanding of polar and 
+                    ocean science, climate change, and environmental conservation.
+                </p>
+            </div>
+            <div class="glass dark:glass-dark p-8 rounded-3xl">
+                <div class="text-6xl mb-6 text-center">🌍</div>
+                <div class="space-y-4">
+                    <div class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-ocean-600 dark:text-ocean-400 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="text-gray-700 dark:text-gray-300">Engage students and educators in polar science</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-ocean-600 dark:text-ocean-400 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="text-gray-700 dark:text-gray-300">Promote awareness of climate change and ocean conservation</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-ocean-600 dark:text-ocean-400 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="text-gray-700 dark:text-gray-300">Foster scientific temper and curiosity</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-ocean-600 dark:text-ocean-400 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="text-gray-700 dark:text-gray-300">Build partnerships with educational institutions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- MILESTONES TIMELINE -->
+        <div class="reveal">
+            <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">Our Journey</h2>
+            <div class="space-y-8">
+                <div class="flex gap-6 items-start">
+                    <div class="flex-shrink-0 w-24 text-right">
+                        <span class="text-2xl font-bold text-ocean-600 dark:text-ocean-400">2018</span>
+                    </div>
+                    <div class="flex-shrink-0 w-4 h-4 rounded-full bg-ocean-600 mt-2"></div>
+                    <div class="glass dark:glass-dark p-6 rounded-xl flex-1">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Launch of Outreach Program</h3>
+                        <p class="text-gray-700 dark:text-gray-300">NCPOR officially launched its dedicated outreach initiative to connect with schools and colleges.</p>
+                    </div>
+                </div>
+                
+                <div class="flex gap-6 items-start">
+                    <div class="flex-shrink-0 w-24 text-right">
+                        <span class="text-2xl font-bold text-ocean-600 dark:text-ocean-400">2019</span>
+                    </div>
+                    <div class="flex-shrink-0 w-4 h-4 rounded-full bg-ocean-600 mt-2"></div>
+                    <div class="glass dark:glass-dark p-6 rounded-xl flex-1">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">First National Workshop</h3>
+                        <p class="text-gray-700 dark:text-gray-300">Conducted the first large-scale workshop on polar science with 500+ student participants from across India.</p>
+                    </div>
+                </div>
+                
+                <div class="flex gap-6 items-start">
+                    <div class="flex-shrink-0 w-24 text-right">
+                        <span class="text-2xl font-bold text-ocean-600 dark:text-ocean-400">2021</span>
+                    </div>
+                    <div class="flex-shrink-0 w-4 h-4 rounded-full bg-ocean-600 mt-2"></div>
+                    <div class="glass dark:glass-dark p-6 rounded-xl flex-1">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Virtual Outreach Initiative</h3>
+                        <p class="text-gray-700 dark:text-gray-300">Adapted to virtual platforms during the pandemic, reaching participants nationwide with online sessions.</p>
+                    </div>
+                </div>
+                
+                <div class="flex gap-6 items-start">
+                    <div class="flex-shrink-0 w-24 text-right">
+                        <span class="text-2xl font-bold text-ocean-600 dark:text-ocean-400">2023</span>
+                    </div>
+                    <div class="flex-shrink-0 w-4 h-4 rounded-full bg-ocean-600 mt-2"></div>
+                    <div class="glass dark:glass-dark p-6 rounded-xl flex-1">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">50+ Partner Institutions</h3>
+                        <p class="text-gray-700 dark:text-gray-300">Established collaborations with over 50 educational institutions across India for regular outreach activities.</p>
+                    </div>
+                </div>
+                
+                <div class="flex gap-6 items-start">
+                    <div class="flex-shrink-0 w-24 text-right">
+                        <span class="text-2xl font-bold text-ocean-600 dark:text-ocean-400">2025</span>
+                    </div>
+                    <div class="flex-shrink-0 w-4 h-4 rounded-full bg-ocean-600 mt-2"></div>
+                    <div class="glass dark:glass-dark p-6 rounded-xl flex-1">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Outreach Portal Launch</h3>
+                        <p class="text-gray-700 dark:text-gray-300">Launched this comprehensive portal to showcase events, share media, and facilitate broader engagement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FOCUS AREAS -->
+        <div class="reveal">
+            <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">Our Focus Areas</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass dark:glass-dark p-8 rounded-2xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="text-6xl mb-4">❄️</div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Polar Research</h3>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        Sharing insights from India's expeditions to the Arctic and Antarctic, including research on ice dynamics, 
+                        glaciology, and polar ecosystems. Students learn about life in extreme environments and the importance 
+                        of polar regions in global climate systems.
+                    </p>
+                </div>
+                
+                <div class="glass dark:glass-dark p-8 rounded-2xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="text-6xl mb-4">🌊</div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Ocean Literacy</h3>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        Promoting understanding of ocean processes, marine biodiversity, and the critical role oceans play in 
+                        regulating Earth's climate. Programs cover topics from ocean currents to deep-sea exploration and 
+                        sustainable fisheries.
+                    </p>
+                </div>
+                
+                <div class="glass dark:glass-dark p-8 rounded-2xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="text-6xl mb-4">🌡️</div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Climate Education</h3>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        Educating communities about climate change, its impacts, and mitigation strategies. Interactive sessions 
+                        explain how polar ice melt affects sea levels, and how ocean warming influences weather patterns and 
+                        marine ecosystems worldwide.
+                    </p>
+                </div>
+                
+                <div class="glass dark:glass-dark p-8 rounded-2xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="text-6xl mb-4">🔬</div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Citizen Science</h3>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        Encouraging public participation in scientific research through data collection, observation programs, 
+                        and collaborative projects. Participants contribute to real research while developing scientific skills 
+                        and environmental awareness.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TESTIMONIALS -->
+        <div class="reveal">
+            <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">What Participants Say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass dark:glass-dark p-8 rounded-2xl">
+                    <div class="flex gap-1 mb-4">
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300 italic mb-4">
+                        "The workshop on polar ecosystems was eye-opening. Learning directly from NCPOR scientists 
+                        inspired me to pursue marine biology!"
+                    </p>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">
+                        <p class="font-semibold">Priya Sharma</p>
+                        <p>Student, Delhi University</p>
+                    </div>
+                </div>
+                
+                <div class="glass dark:glass-dark p-8 rounded-2xl">
+                    <div class="flex gap-1 mb-4">
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300 italic mb-4">
+                        "Excellent initiative! The field visit gave our students hands-on experience with 
+                        oceanographic instruments. Truly educational."
+                    </p>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">
+                        <p class="font-semibold">Dr. Rajesh Kumar</p>
+                        <p>Professor, IIT Bombay</p>
+                    </div>
+                </div>
+                
+                <div class="glass dark:glass-dark p-8 rounded-2xl">
+                    <div class="flex gap-1 mb-4">
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300 italic mb-4">
+                        "The climate change talk was informative and engaging. Now I understand why polar research 
+                        matters for everyone, not just scientists."
+                    </p>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">
+                        <p class="font-semibold">Aisha Patel</p>
+                        <p>Community Member, Mumbai</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CTA SECTION -->
+        <div class="reveal">
+            <div class="glass dark:glass-dark p-12 rounded-3xl text-center bg-gradient-to-br from-ocean-500/10 to-polar-500/10 dark:from-ocean-900/30 dark:to-polar-900/30">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Get Involved</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+                    Join us in spreading awareness about polar and ocean science. Whether you're a student, educator, 
+                    or institution, there's a place for you in our outreach community.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="{% url 'event_list' %}" 
+                       class="inline-block px-8 py-4 bg-ocean-600 hover:bg-ocean-700 text-white rounded-xl font-bold 
+                              transform hover:scale-105 hover:shadow-2xl hover:shadow-ocean-500/50 transition-all duration-300">
+                        Browse Events
+                    </a>
+                    <a href="mailto:outreach@ncpor.res.in" 
+                       class="inline-block px-8 py-4 glass dark:glass-dark hover:bg-white/30 dark:hover:bg-gray-700/50 
+                              text-gray-900 dark:text-white rounded-xl font-bold border-2 border-ocean-600
+                              transform hover:scale-105 transition-all duration-300">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+{% endblock %}
