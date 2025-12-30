@@ -53,13 +53,13 @@
                 @apply bg-white/10 backdrop-blur-lg border border-white/20;
             }
             .glass-dark {
-                @apply bg-gray-900/40 backdrop-blur-lg border border-gray-700/50;
+                @apply bg-gray-800/40 backdrop-blur-lg border border-gray-600/50;
             }
             .gradient-ocean {
-                @apply bg-gradient-to-br from-ocean-600 via-ocean-700 to-polar-800;
+                @apply bg-gradient-to-br from-cyan-500 via-cyan-600 to-blue-700;
             }
             .gradient-ice {
-                @apply bg-gradient-to-br from-polar-100 via-ocean-50 to-white;
+                @apply bg-gradient-to-br from-cyan-50 via-blue-50 to-white;
             }
             
             /* Hero Media Zoom Effect */
@@ -84,9 +84,9 @@
             
             /* Hero CTA Buttons */
             .hero-cta-primary {
-                @apply inline-flex items-center gap-2 px-8 py-4 bg-polar-400 text-ocean-900 
-                       rounded-xl font-bold text-base md:text-lg shadow-2xl shadow-polar-400/50
-                       hover:bg-polar-300 hover:scale-105 hover:shadow-polar-300/60
+                @apply inline-flex items-center gap-2 px-8 py-4 bg-[#F8B195] text-gray-900 
+                       rounded-xl font-bold text-base md:text-lg shadow-2xl shadow-orange-300/50
+                       hover:bg-[#F67280] hover:scale-105 hover:shadow-pink-300/60
                        transform transition-all duration-300 ease-out;
             }
             
@@ -133,7 +133,7 @@
     {% load static %}
 </head>
 
-<body class="bg-gradient-to-br from-gray-50 to-ocean-50/30 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+<body class="bg-gradient-to-br from-gray-50 to-cyan-50/40 dark:from-gray-800 dark:to-slate-700 text-gray-900 dark:text-gray-50 transition-colors duration-300">
 
 <!-- NAVIGATION -->
 {% include "includes/_navbar.html" %}
@@ -144,18 +144,13 @@
 </main>
 
 <!-- FOOTER -->
-<footer class="bg-gray-900 dark:bg-black text-gray-300 mt-20">
+<footer class="bg-gray-900 dark:bg-gray-800 text-gray-300 mt-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div class="col-span-1 md:col-span-2">
-                <div class="flex items-center gap-3 mb-4">
-                    <img src="{% static 'events/images/ncpor-logo.png' %}" 
-                         alt="NCPOR Logo" 
-                         class="h-16 w-16 rounded-full shadow-lg ring-2 ring-ocean-500/30">
-                    <div>
-                        <h3 class="text-xl font-bold text-white">NCPOR Outreach Portal</h3>
-                        <p class="text-sm text-gray-400">National Centre for Polar and Ocean Research</p>
-                    </div>
+                <div class="mb-4">
+                    <h3 class="text-xl font-bold text-white mb-2">NCPOR Outreach Portal</h3>
+                    <p class="text-sm text-gray-400">National Centre for Polar and Ocean Research</p>
                 </div>
                 <p class="text-sm text-gray-400 mb-4">
                     Connecting cutting-edge science with society through engaging outreach programs.
@@ -191,7 +186,11 @@
     </div>
 </footer>
 
+<!-- Chart.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
 <script src="{% static 'events/js/main.js' %}"></script>
+<script src="{% static 'events/js/home-analytics.js' %}"></script>
 
 </body>
 </html>

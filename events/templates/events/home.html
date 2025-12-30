@@ -4,14 +4,75 @@
 
 {% block content %}
 
-<!-- FULL-SCREEN FEATURED EVENT HERO -->
+<!-- FEATURED EVENT HERO -->
 {% if featured_event %}
-<section id="featured-hero" class="relative w-full h-screen overflow-hidden">
-    <!-- Media Container (Background) -->
-    <div class="absolute inset-0 w-full h-full">
-        <!-- Video Background (if exists) -->
-        {% if featured_event.videos.exists %}
-        <div id="heroVideo" class="absolute inset-0 w-full h-full">
+<section id="featured-hero" class="relative w-full bg-white dark:bg-gray-800 overflow-hidden">
+    <div class="grid grid-cols-1 lg:grid-cols-2 min-h-screen lg:min-h-auto">
+        <!-- Content Container (Left on Desktop, Top on Mobile) -->
+        <div class="relative flex items-center lg:items-center order-1 py-12 lg:py-0 px-4 sm:px-6 lg:px-12 bg-white dark:bg-gray-800">
+            <div class="w-full max-w-2xl mx-auto lg:mx-0">
+                <!-- Featured Badge -->
+                <div class="flex items-center gap-3 mb-4 md:mb-6 animate-fade-in">
+                    <span class="px-4 py-2 bg-[#F8B195] text-gray-900 rounded-full text-sm md:text-base font-bold shadow-lg">
+                        ✨ Featured Event
+                    </span>
+                    <span class="px-4 py-2 glass backdrop-blur-md text-white rounded-full text-sm md:text-base font-semibold">
+                        Latest
+                    </span>
+                </div>
+                
+                <!-- Event Title -->
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-4 md:mb-6 animate-slide-up leading-tight" style="animation-delay: 0.2s;">
+                    {{ featured_event.title }}
+                </h1>
+                
+                <!-- Event Meta -->
+                <div class="flex flex-wrap items-center gap-4 md:gap-6 mb-6 md:mb-8 text-gray-700 dark:text-gray-300 animate-slide-up" style="animation-delay: 0.4s;">
+                    <div class="flex items-center gap-2 text-base md:text-lg">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-[#00DDFF] dark:text-[#00DDFF]" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"/>
+                        </svg>
+                        <span class="font-medium">{{ featured_event.date|date:"F j, Y" }}</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-base md:text-lg">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-[#00DDFF] dark:text-[#00DDFF]" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"/>
+                        </svg>
+                        <span class="font-medium">{{ featured_event.location }}</span>
+                    </div>
+                </div>
+                
+                <!-- Event Description -->
+                <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 md:mb-10 animate-slide-up leading-relaxed" style="animation-delay: 0.6s;">
+                    {{ featured_event.description|truncatewords:30 }}
+                </p>
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-wrap gap-4 animate-slide-up" style="animation-delay: 0.8s;">
+                    <a href="{% url 'event_detail' featured_event.id %}" 
+                       class="inline-flex items-center gap-2 px-8 py-4 bg-[#00DDFF] hover:bg-[#F67280] text-gray-900 
+                              rounded-xl font-bold text-base md:text-lg shadow-xl shadow-cyan-400/50
+                              hover:scale-105 transform transition-all duration-300 ease-out group">
+                        <span>View Full Details</span>
+                        <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                    <a href="{% url 'event_list' %}" 
+                       class="inline-flex items-center gap-2 px-8 py-4 bg-gray-200 dark:bg-slate-700 text-gray-900 dark:text-white
+                              rounded-xl font-bold text-base md:text-lg hover:bg-gray-300 dark:hover:bg-slate-600
+                              hover:scale-105 transform transition-all duration-300 ease-out">
+                        Browse All Events
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Media Container (Right on Desktop, Bottom on Mobile) -->
+        <div class="relative h-96 lg:h-screen order-2">
+            <!-- Video Background (if exists) -->
+            {% if featured_event.videos.exists %}
+            <div id="heroVideo" class="absolute inset-0 w-full h-full">
             {% with featured_event.videos.first as video %}
             <video 
                 id="heroVideoPlayer"
@@ -105,115 +166,45 @@
             <img 
                 src="{{ featured_event.cover_image.url }}" 
                 alt="{{ featured_event.title }}"
-                class="w-full h-full object-cover hero-media-zoom">
+                class="w-full h-full object-cover">
         </div>
         
         <!-- Final Fallback: Gradient -->
         {% else %}
         <div class="absolute inset-0 w-full h-full gradient-ocean">
             <div class="absolute inset-0 overflow-hidden pointer-events-none">
-                <div class="absolute top-20 left-10 w-72 h-72 bg-polar-400/30 rounded-full blur-3xl animate-pulse"></div>
-                <div class="absolute bottom-20 right-10 w-96 h-96 bg-ocean-400/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+                <div class="absolute top-20 left-10 w-72 h-72 bg-[#F8B195]/30 rounded-full blur-3xl animate-pulse"></div>
+                <div class="absolute bottom-20 right-10 w-96 h-96 bg-[#00DDFF]/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
             </div>
         </div>
         {% endif %}
-    </div>
-    
-    <!-- Gradient Overlay for Text Readability -->
-    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
-    
-    <!-- Content Overlay -->
-    <div class="relative z-20 h-full flex items-end">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-24 w-full">
-            <div class="max-w-4xl">
-                <!-- Featured Badge -->
-                <div class="flex items-center gap-3 mb-4 md:mb-6 animate-fade-in">
-                    <span class="px-4 py-2 bg-polar-400 text-ocean-900 rounded-full text-sm md:text-base font-bold shadow-lg">
-                        ✨ Featured Event
-                    </span>
-                    <span class="px-4 py-2 glass backdrop-blur-md text-white rounded-full text-sm md:text-base font-semibold">
-                        Latest
-                    </span>
-                </div>
-                
-                <!-- Event Title -->
-                <h1 class="hero-title text-white mb-4 md:mb-6 animate-slide-up" style="animation-delay: 0.2s;">
-                    {{ featured_event.title }}
-                </h1>
-                
-                <!-- Event Meta -->
-                <div class="flex flex-wrap items-center gap-4 md:gap-6 mb-6 md:mb-8 text-white/90 animate-slide-up" style="animation-delay: 0.4s;">
-                    <div class="flex items-center gap-2 text-base md:text-lg">
-                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"/>
-                        </svg>
-                        <span class="font-medium">{{ featured_event.date|date:"F j, Y" }}</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-base md:text-lg">
-                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"/>
-                        </svg>
-                        <span class="font-medium">{{ featured_event.location }}</span>
-                    </div>
-                </div>
-                
-                <!-- Event Description -->
-                <p class="hero-description text-white/90 mb-8 md:mb-10 animate-slide-up" style="animation-delay: 0.6s;">
-                    {{ featured_event.description|truncatewords:30 }}
-                </p>
-                
-                <!-- CTA Buttons -->
-                <div class="flex flex-wrap gap-4 animate-slide-up" style="animation-delay: 0.8s;">
-                    <a href="{% url 'event_detail' featured_event.id %}" 
-                       class="hero-cta-primary group">
-                        <span>View Full Details</span>
-                        <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                        </svg>
-                    </a>
-                    <a href="{% url 'event_list' %}" 
-                       class="hero-cta-secondary">
-                        Browse All Events
-                    </a>
-                </div>
-            </div>
         </div>
-    </div>
-    
-    <!-- Scroll Indicator -->
-    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce hidden md:block">
-        <a href="#events-overview" class="flex flex-col items-center gap-2 text-white/80 hover:text-white transition-colors">
-            <span class="text-sm font-medium">Scroll Down</span>
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-            </svg>
-        </a>
     </div>
 </section>
 
 <!-- Fallback Hero (No Featured Event) -->
 {% else %}
-<section class="relative min-h-screen flex items-center overflow-hidden gradient-ocean">
+<section class="relative min-h-screen flex items-center overflow-hidden bg-white dark:bg-gray-950">
     <!-- Animated background blobs -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-        <div class="absolute top-20 left-10 w-72 h-72 bg-polar-400/30 rounded-full blur-3xl animate-pulse"></div>
-        <div class="absolute bottom-20 right-10 w-96 h-96 bg-ocean-400/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+        <div class="absolute top-20 left-10 w-72 h-72 bg-[#F8B195]/30 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-[#00DDFF]/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
         <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-white/10 rounded-full blur-2xl animate-pulse" style="animation-delay: 2s;"></div>
     </div>
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
-        <div class="text-center text-white space-y-6">
+        <div class="text-center text-gray-900 dark:text-white space-y-6">
             <h1 class="text-5xl md:text-6xl font-bold leading-tight">
-                Connecting <span class="text-polar-200">Polar & Ocean</span> Science with Society
+                Connecting <span class="text-[#00DDFF] dark:text-[#00DDFF]">Polar & Ocean</span> Science with Society
             </h1>
-            <p class="text-xl text-polar-100/90 leading-relaxed max-w-3xl mx-auto">
+            <p class="text-xl text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl mx-auto">
                 Engaging students, educators, and the public through interactive workshops, 
                 field visits, exhibitions, and scientific talks on polar and ocean research.
             </p>
             <div class="flex flex-wrap gap-4 pt-4 justify-center">
                 <a href="{% url 'event_list' %}" 
-                   class="px-8 py-4 bg-white text-ocean-700 rounded-xl font-semibold 
-                          hover:scale-105 hover:shadow-2xl hover:shadow-white/20
+                   class="px-8 py-4 bg-ocean-600 hover:bg-ocean-700 text-white rounded-xl font-semibold 
+                          hover:scale-105 hover:shadow-2xl hover:shadow-ocean-600/50
                           transform transition-all duration-300">
                     Browse Upcoming Events
                 </a>
@@ -233,7 +224,7 @@
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Upcoming Events</h2>
                     <a href="{% url 'event_list' %}" 
-                       class="text-ocean-600 dark:text-ocean-400 hover:text-ocean-700 font-semibold flex items-center gap-2">
+                       class="text-[#F67280] dark:text-[#F8B195] hover:text-[#FF1D58] font-semibold flex items-center gap-2">
                         View All →
                     </a>
                 </div>
@@ -243,10 +234,10 @@
                     {% for event in upcoming_events|slice:":3" %}
                     <div class="glass dark:glass-dark p-6 rounded-xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
                         <div class="flex justify-between items-start mb-3">
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-ocean-600 dark:group-hover:text-ocean-400 transition-colors">
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                                 {{ event.title }}
                             </h3>
-                            <span class="px-3 py-1 bg-ocean-100 dark:bg-ocean-900/50 text-ocean-700 dark:text-ocean-300 rounded-full text-xs font-semibold whitespace-nowrap ml-2">
+                            <span class="px-3 py-1 bg-[#00DDFF]/20 dark:bg-[#00DDFF]/30 text-[#355C7D] dark:text-[#00DDFF] rounded-full text-xs font-semibold whitespace-nowrap ml-2">
                                 {{ event.event_type }}
                             </span>
                         </div>
@@ -265,7 +256,7 @@
                             </span>
                         </div>
                         <a href="{% url 'event_detail' event.id %}" 
-                           class="inline-flex items-center gap-2 text-ocean-600 dark:text-ocean-400 hover:gap-3 font-semibold transition-all duration-300">
+                           class="inline-flex items-center gap-2 text-[#F67280] dark:text-[#F8B195] hover:gap-3 font-semibold transition-all duration-300">
                             Learn More
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -280,7 +271,7 @@
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">No Upcoming Events</h3>
                     <p class="text-gray-600 dark:text-gray-400 mb-6">Stay tuned for new outreach opportunities!</p>
                     <a href="{% url 'event_list' %}" 
-                       class="inline-block px-6 py-3 bg-ocean-600 text-white rounded-lg hover:bg-ocean-700 transition-colors">
+                       class="inline-block px-6 py-3 bg-[#00DDFF] text-gray-900 rounded-lg hover:bg-[#F67280] hover:text-white transition-colors">
                         View All Events
                     </a>
                 </div>
@@ -309,12 +300,12 @@
                                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         </div>
                         {% else %}
-                        <div class="aspect-video bg-gradient-to-br from-ocean-400 to-polar-500 flex items-center justify-center">
+                        <div class="aspect-video bg-gradient-to-br from-[#00DDFF] to-[#6C5B7B] flex items-center justify-center">
                             <span class="text-4xl">🌊</span>
                         </div>
                         {% endif %}
                         <div class="p-4">
-                            <h3 class="font-bold text-gray-900 dark:text-white mb-1 group-hover:text-ocean-600 dark:group-hover:text-ocean-400 transition-colors line-clamp-2">
+                            <h3 class="font-bold text-gray-900 dark:text-white mb-1 group-hover:text-[#F67280] dark:group-hover:text-[#F8B195] transition-colors line-clamp-2">
                                 {{ event.title }}
                             </h3>
                             <p class="text-xs text-gray-600 dark:text-gray-400">{{ event.date|date:"M d, Y" }}</p>
@@ -335,25 +326,104 @@
     </div>
 </section>
 
-<!-- STATS SECTION -->
-<section class="py-20 px-4 sm:px-6 lg:px-8 gradient-ocean reveal">
+<!-- OUR IMPACT ANALYTICS SECTION -->
+<section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 reveal">
     <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div class="text-center glass-dark p-8 rounded-2xl transform hover:scale-105 transition-all duration-300">
-                <div class="text-5xl font-bold text-white mb-2 counter" data-target="100">0</div>
-                <div class="text-polar-200 font-semibold">Events Conducted</div>
+        <!-- Section Header -->
+        <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">Our Impact</h2>
+            <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Transforming science education across India through engaging outreach programs
+            </p>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
+            <!-- Total Events -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-l-4 border-[#2180a1]">
+                <div class="flex items-start justify-between mb-2">
+                    <div class="p-2 bg-[#2180a1]/10 rounded-lg">
+                        <svg class="w-6 h-6 text-[#2180a1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-1" id="kpi-total-events">130</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400 font-medium">Total Events</div>
             </div>
-            <div class="text-center glass-dark p-8 rounded-2xl transform hover:scale-105 transition-all duration-300">
-                <div class="text-5xl font-bold text-white mb-2"><span class="counter" data-target="5000">0</span>+</div>
-                <div class="text-polar-200 font-semibold">Participants Reached</div>
+
+            <!-- Total Participants -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-l-4 border-[#32b8c6]">
+                <div class="flex items-start justify-between mb-2">
+                    <div class="p-2 bg-[#32b8c6]/10 rounded-lg">
+                        <svg class="w-6 h-6 text-[#32b8c6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-1" id="kpi-total-participants">8,375</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400 font-medium">Participants</div>
             </div>
-            <div class="text-center glass-dark p-8 rounded-2xl transform hover:scale-105 transition-all duration-300">
-                <div class="text-5xl font-bold text-white mb-2 counter" data-target="50">0</div>
-                <div class="text-polar-200 font-semibold">Partner Institutions</div>
+
+            <!-- Institutions -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-l-4 border-[#5e52a0]">
+                <div class="flex items-start justify-between mb-2">
+                    <div class="p-2 bg-[#5e52a0]/10 rounded-lg">
+                        <svg class="w-6 h-6 text-[#5e52a0]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-1" id="kpi-institutions">45+</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400 font-medium">Institutions</div>
             </div>
-            <div class="text-center glass-dark p-8 rounded-2xl transform hover:scale-105 transition-all duration-300">
-                <div class="text-5xl font-bold text-white mb-2 counter" data-target="25">0</div>
-                <div class="text-polar-200 font-semibold">Cities Covered</div>
+
+            <!-- YoY Growth -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-l-4 border-emerald-500">
+                <div class="flex items-start justify-between mb-2">
+                    <div class="p-2 bg-emerald-500/10 rounded-lg">
+                        <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-1" id="kpi-growth">24%</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400 font-medium">YoY Growth</div>
+            </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Trend Chart -->
+            <div class="bg-gradient-to-br from-cyan-50/50 via-blue-50/30 to-white dark:from-gray-800 dark:via-slate-800 dark:to-gray-800 rounded-2xl p-6 shadow-lg border border-cyan-100/50 dark:border-gray-700">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Events Trend</h3>
+                <div class="h-64">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Event Type Distribution -->
+            <div class="bg-gradient-to-br from-pink-50/40 via-purple-50/30 to-white dark:from-gray-800 dark:via-slate-800 dark:to-gray-800 rounded-2xl p-6 shadow-lg border border-pink-100/50 dark:border-gray-700">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Event Distribution</h3>
+                <div class="h-64">
+                    <canvas id="distributionChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Top Institutions -->
+            <div class="bg-gradient-to-br from-cyan-50/50 via-teal-50/30 to-white dark:from-gray-800 dark:via-slate-800 dark:to-gray-800 rounded-2xl p-6 shadow-lg border border-cyan-100/50 dark:border-gray-700">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Top Institutions</h3>
+                <div class="h-64">
+                    <canvas id="institutionsChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Geographic Distribution -->
+            <div class="bg-gradient-to-br from-purple-50/40 via-indigo-50/30 to-white dark:from-gray-800 dark:via-slate-800 dark:to-gray-800 rounded-2xl p-6 shadow-lg border border-purple-100/50 dark:border-gray-700">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Geographic Reach</h3>
+                <div class="h-64">
+                    <canvas id="geographicChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
@@ -402,24 +472,6 @@
                     Expert lectures and discussions on polar science, climate change, and ocean conservation.
                 </p>
             </div>
-        </div>
-    </div>
-</section>
-
-<!-- CALL TO ACTION SECTION -->
-<section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 reveal">
-    <div class="max-w-5xl mx-auto">
-        <div class="glass dark:glass-dark p-12 rounded-3xl text-center bg-gradient-to-br from-ocean-500/10 to-polar-500/10 dark:from-ocean-900/30 dark:to-polar-900/30">
-            <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Partner with Us</h2>
-            <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
-                Are you an institution, school, or college interested in bringing polar and ocean science 
-                outreach to your community? Let's collaborate!
-            </p>
-            <a href="mailto:outreach@ncpor.res.in" 
-               class="inline-block px-10 py-5 bg-ocean-600 hover:bg-ocean-700 text-white rounded-xl font-bold text-lg 
-                      transform hover:scale-105 hover:shadow-2xl hover:shadow-ocean-500/50 transition-all duration-300">
-                Propose an Outreach Event
-            </a>
         </div>
     </div>
 </section>
